@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-
+from .managers import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -43,6 +43,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
     
+    #  Our custome user manager
+    objects = UserManager()
     
     class Meta:
         ordering = ['joined_date']
