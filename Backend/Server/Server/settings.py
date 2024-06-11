@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # Beatify applications
-    'users',
+    'users.apps.UsersConfig',
+    'authentication.apps.AuthenticationConfig',
     
     # Third party applications
     'rest_framework',
