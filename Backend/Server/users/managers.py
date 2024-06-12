@@ -5,7 +5,7 @@ from profiles.models import UserProfile
 
 class UserManager(BaseUserManager):
     # Method to create user with provided credentials
-    def create_user(self, username, email , user_type, password=None): 
+    def create_user(self, username, email , user_type, password=None, password_conf=None): 
         
         email = email.lower()
         
@@ -28,7 +28,7 @@ class UserManager(BaseUserManager):
         user = self.create_user(
             email=self.normalize_email(email),
             username=username,
-            user_type="SIM",
+            user_type="SIN",
             password=password,
         )
         
