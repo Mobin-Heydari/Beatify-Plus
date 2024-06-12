@@ -1,11 +1,10 @@
 from django.db import models
-from users.models import User
 
 
 class UserProfile(models.Model):
     
     user = models.OneToOneField(
-        User,
+        'users.User',
         on_delete=models.CASCADE, 
         related_name="user_profile"
     )
