@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # Beatify applications
     'users.apps.UsersConfig',
     'authentication.apps.AuthenticationConfig',
+    'profiles.apps.ProfilesConfig',
     
     # Third party applications
     'rest_framework',
