@@ -37,7 +37,9 @@ class Otp(models.Model):
     
     code = models.CharField(max_length=6)
     
-    expiration = models.DateTimeField()
+    expiration = models.DateTimeField(
+        default=timezone.now() + timezone.timedelta(minutes=1)
+    )
     
     class Meta:
         verbose_name = "One-Time Password"

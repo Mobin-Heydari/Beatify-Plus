@@ -17,4 +17,7 @@ urlpatterns = [
     
     # register
     path('register/', views.UserRegister.as_view(), name="user_register"),
+    
+    # Check otp
+    path('check-otp/<str:token>', views.CheckOtp.as_view(), name="user_check_otp"),
 ]

@@ -1,11 +1,16 @@
+from django.contrib.auth.password_validation import validate_password
+from django.utils.crypto import get_random_string
+
 from rest_framework import serializers
 from rest_framework import validators
-from django.contrib.auth.password_validation import validate_password
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from users.models import User
 
+from .models import Otp
+
+from random import randint
 
 
 class TokenObtainSerializer(TokenObtainPairSerializer):
@@ -52,53 +57,81 @@ class UserLoginSerializer(serializers.Serializer):
 
     
 class UserRegisterSerializer(serializers.Serializer):
+    """
+    Serializer for user registration
+    """
     
+    # Email field with unique validator to ensure email is not already in use
     email = serializers.EmailField(
         validators=[
             validators.UniqueValidator(queryset=User.objects.all())
         ]
     )
     
+    # Username field with unique validator to ensure username is not already in use
     username = serializers.CharField(
         validators=[
             validators.UniqueValidator(queryset=User.objects.all())
         ]
     )
     
+    # Password field with custom validator and write-only access
     password = serializers.CharField(
         validators=[validate_password],
         write_only=True,
         required=True
     )
+
+    # Password confirmation field with write-only access
     password_conf = serializers.CharField(
         write_only=True,
         required=True
     )
-    
+
+    # User type field with write-only access
     user_type = serializers.CharField(
         write_only=True,
         required=True
     )
-        
-        
+    
+    
     def validate(self, attrs):
-        
+        """
+        Validate the serializer data
+        """
+        # Check if the password and password confirmation match
         if attrs['password'] == attrs['password_conf']:
-            
-            if len(attrs['password']) >= 8 and len(attrs['password']) <=16:
+            # Check if the password length is between 8 and 16 characters
+            if len(attrs['password']) >= 8 and len(attrs['password']) <= 16:
                 return attrs
             else:
-                raise serializers.ValidationError({"Detail":"Password length should be between 8 to 16 characters."})
+                raise serializers.ValidationError({"Detail": "Password length should be between 8 to 16 characters."})
         else:
             raise serializers.ValidationError({"Detail": "Passwords fields didn't match."})
-
-        return attrs
-    
     
     def create(self, validated_data):
+
+        # Create a new OTP object and save it to the database
+
+        # Generate a random code and token
+        code = randint(100000, 999999)
+        token = get_random_string(250)
         
-        user = User.objects.create_user(**validated_data)
+        # Create a new OTP object with the validated data
+        otp = Otp.objects.create(
+            email=validated_data['email'],
+            username=validated_data['username'],
+            user_type=validated_data['user_type'],
+            password=validated_data['password'],
+            token=token,
+            code=code
+        )
         
-        user.save()
+        # Save the OTP object to the database
+        otp.save()
         
-        return user
+        return otp
+    
+class OtpSerializer(serializers.Serializer):
+    
+    code = serializers.CharField(write_only=True, required=True)
