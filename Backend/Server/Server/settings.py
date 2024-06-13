@@ -188,3 +188,13 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+
+# Emailing Settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST = 'Email-Host'
+EMAIL_HOST_USER = 'Email-Host-user'
+EMAIL_HOST_PASSWORD = 'Email-Host-user-password'
+EMAIL_PORT = 587
