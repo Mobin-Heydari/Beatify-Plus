@@ -34,11 +34,12 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'authentication.apps.AuthenticationConfig',
     'profiles.apps.ProfilesConfig',
+    'beats.apps.BeatsConfig',
     
     # Third party applications
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
-    'corsheaders',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
