@@ -48,28 +48,18 @@ class Otp(models.Model):
         return f'{self.status}----{self.code}----{self.token}'
         
         
-    def get_expiration_time(self):
-        
-        now = timezone.now()
-        
-        self.expiration = now + timezone.timedelta(minutes=1)
-        
-        return self.expiration
-    
-    def validate_status(self):
+    def status_validation(self):
         
         if self.expiration >= timezone.now():
             
-            self.status == self.OtpStatus.EXPIRED
+            self.status = self.OtpStatus.EXPIRED
             
-            return self.status
-    
-    def delete_expired_one_time_passwords(self):
+            if self.status == self.OtpStatus.EXPIRED:
         
-        if self.status == self.OtpStatus.EXPIRED:
-            
-            self.delete()
-            
-            return 'Deleted'
+                self.delete()
+                
+                return 'Deleted'
+            else:
+                return 'Is not expired'
         else:
             return 'Is not expired'
