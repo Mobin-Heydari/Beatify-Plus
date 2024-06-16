@@ -104,7 +104,7 @@ class Beat(models.Model):
     accepted_manager = managers.AcceptedManager()
     rejected_manager = managers.RejectedManager()
     checking_manager = managers.CheckingManager()
-    published_manager = managers.PublicManager()
+    published_manager = managers.PublishedManager()
     drafts_manager = managers.DraftManager()
     private_manager = managers.PrivateManager()
     class Meta:
