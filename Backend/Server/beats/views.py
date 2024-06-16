@@ -38,9 +38,9 @@ class BeatViewSet(ViewSet, BeatPagination):
         if request.user.is_authenticated == True:
             user = request.user
             # Then we will check that this user is the Producer user or Musician user or not?
-            if user.type == 'PRD' or user.type == 'MUC':
+            if user.user_type == 'PRD':
                 # If yes then we will go forward
-                serializer = serializers.BeatSerializer(data=request.data)
+                serializer = serializers.BeatSerializer(data=request.data, context={'request': request})
                 # If the data is valid then save the data into database else give errors
                 if serializer.is_valid(raise_exception=True):
                     serializer.save()

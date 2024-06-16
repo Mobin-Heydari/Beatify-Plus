@@ -9,29 +9,31 @@ class BeatSerializer(serializers.ModelSerializer):
     
     info = serializers.SerializerMethodField()
     
-    # file = serializers.FileField()
-    # image = serializers.FileField()
+    beat_file = serializers.FileField()
+    image = serializers.FileField()
     
     class Meta:
         model = Beat
         fields = '__all__'
         
     
-    def create(self, **validated_data):
+    def create(self, validated_data):
+        
+        request = self.context.get('request')
         
         beat = Beat.objects.create(
             title = validated_data['title'],
-            owner = self.context['request'].user,
+            owner = request.user,
             description = validated_data['description'],
-            slug = f'{self.context['request'].user.username}-{validated_data['title']}',
-            beat_file = validated_data['file'],
+            slug = f'{request.user.username}-{validated_data['title']}',
+            beat_file = validated_data['beat_file'],
             image = validated_data['image']
         )
         
         beat.save()
         
         beat_info = BeatInformation.objects.create(
-             beat = beat
+            beat = beat
         )
         
         beat_info.save()

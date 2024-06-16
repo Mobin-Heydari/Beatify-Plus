@@ -21,7 +21,7 @@ class Beat(models.Model):
     published_status = models.CharField(
         max_length=9,
         choices=PublishedStatus.choices,
-        default=PublishedStatus.DRAFT,
+        default='Draft',
         verbose_name='published status',
     )  # Field to store the published status of the Beat
 
@@ -29,14 +29,16 @@ class Beat(models.Model):
     status = models.CharField(
         max_length=8, 
         choices=Status.choices, 
-        default=Status.CHECKING
+        default='Checking'
     )  # Field to store the status of the Beat
 
     # Foreign key to the User who owns the Beat
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='Beat_Owner'
+        related_name='Beat_Owner',
+        blank=True,
+        null=True
     )  # Foreign key to the User model
 
     # Title of the Beat
@@ -50,7 +52,9 @@ class Beat(models.Model):
     # Unique slug for the Beat
     slug = models.SlugField(
         max_length=255,
-        unique=True
+        unique=True,
+        blank=True,
+        null=True
     )  # Field to store the slug of the Beat
 
     # Image associated with the Beat
@@ -63,7 +67,8 @@ class Beat(models.Model):
     beat_file = models.FileField(
         verbose_name='beat file',
         upload_to='beats/files',
-        blank=True
+        blank=True,
+        null=True,
     )  # Field to store the file associated with the Beat
 
     # Description of the Beat
@@ -99,14 +104,6 @@ class Beat(models.Model):
     # Manager for private Beats
     private = managers.PrivateManager()
     
-    # Managers for the Beat model
-    objects = models.Manager()
-    accepted_manager = managers.AcceptedManager()
-    rejected_manager = managers.RejectedManager()
-    checking_manager = managers.CheckingManager()
-    published_manager = managers.PublishedManager()
-    drafts_manager = managers.DraftManager()
-    private_manager = managers.PrivateManager()
     class Meta:
         # Meta options for the Beat model
         ordering = ['-created']
