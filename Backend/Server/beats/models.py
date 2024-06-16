@@ -3,7 +3,7 @@ from users.models import User
 from . import managers
 
 
-python
+
 class Beat(models.Model):
     # Define the published status choices (Draft, Private, Published)
     class PublishedStatus(models.Choices):
@@ -43,6 +43,7 @@ class Beat(models.Model):
     title = models.CharField(
         max_length=50,
         blank=False,
+        unique=True,
         null=False
     )  # Field to store the title of the Beat
 
@@ -97,7 +98,15 @@ class Beat(models.Model):
 
     # Manager for private Beats
     private = managers.PrivateManager()
-
+    
+    # Managers for the Beat model
+    objects = models.Manager()
+    accepted_manager = managers.AcceptedManager()
+    rejected_manager = managers.RejectedManager()
+    checking_manager = managers.CheckingManager()
+    published_manager = managers.PublicManager()
+    drafts_manager = managers.DraftManager()
+    private_manager = managers.PrivateManager()
     class Meta:
         # Meta options for the Beat model
         ordering = ['-created']
@@ -110,7 +119,6 @@ class Beat(models.Model):
     
 
 
-python
 class BeatInformation(models.Model):
     # One-to-one field to the Beat model
     beat = models.OneToOneField(

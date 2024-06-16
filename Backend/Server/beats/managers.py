@@ -2,7 +2,6 @@ from django.db.models import Manager
 from . import models
 
 
-python
 class AcceptedManager(Manager):
     # Custom manager to filter Beats with 'accepted' status
     def get_queryset(self):
