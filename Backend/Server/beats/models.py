@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import User
-
+from . import managers
 
 
 class Beat(models.Model):
@@ -41,6 +41,7 @@ class Beat(models.Model):
     title = models.CharField(
         max_length=50,
         blank=False,
+        unique=True,
         null=False
     )
     
@@ -67,6 +68,15 @@ class Beat(models.Model):
     
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    
+    # Managers for the Beat model
+    objects = models.Manager()
+    accepted_manager = managers.AcceptedManager()
+    rejected_manager = managers.RejectedManager()
+    checking_manager = managers.CheckingManager()
+    published_manager = managers.PublicManager()
+    drafts_manager = managers.DraftManager()
+    private_manager = managers.PrivateManager()
     
     class Meta:
         ordering = ['-created']
