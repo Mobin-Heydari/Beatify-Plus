@@ -142,3 +142,33 @@ class BeatViewSet(ViewSet, BeatPagination):
                 },
                 status=status.HTTP_401_UNAUTHORIZED
             )
+            
+    def delete(self, request, pk):
+        """
+        Update a beat
+        """
+        # Get the beat instance by slug (pk)
+        queryset = get_object_or_404(Beat, slug=pk)
+        
+        # Check if the requesting user is authenticated
+        if request.user.is_authenticated:
+            # Check object permissions using the permission classes
+            self.check_object_permissions(request, queryset)
+            # Delete the beat instance using ORM
+            queryset.delete()
+            # Returning the deleted response
+            return Response(
+                {
+                    'Detail':'Deleted'
+                },
+                status=status.HTTP_200_OK
+            )
+        else:
+            # Return a 401 Unauthorized response if the user is not authenticated
+            return Response(
+                {
+                    'Detail':'you are not authenticated.'
+                },
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+            
