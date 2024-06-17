@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.utils.crypto import get_random_string
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 
@@ -12,6 +13,8 @@ from users.models import User
 
 from . import serializers
 from .models import Otp
+
+from random import randint
 
 
 class TokenObtainView(TokenObtainPairView):
@@ -83,27 +86,37 @@ class UserRegister(APIView):
         # Check if the user is not already authenticated
         if request.user.is_authenticated == False:  # Simplified the condition
             # Create a serializer instance with the request data
-            serializer = serializers.UserRegisterSerializer(data=request.data)
+            serializer = serializers.RegisterSerializer(data=request.data)
             
             # Validate the serializer data
             if serializer.is_valid(raise_exception=True):
-                # Save the validated data
-                serializer.save()
+                # Create a new OTP object and save it to the database
+
+                # Generate a random code and token
+                code = randint(100000, 999999)
+                token = get_random_string(100)
                 
-                # Get the email from the validated data
-                email = serializer.validated_data['email']
+                # Create a new OTP object with the validated data
+                otp = Otp.objects.create(
+                    email = serializer.validated_data['email'],
+                    username = serializer.validated_data['username'],
+                    user_type = serializer.validated_data['user_type'],
+                    password = serializer.validated_data['password'],
+                    token = token,
+                    code = code
+                )
                 
-                # Get the OTP object associated with the email
-                otp = Otp.objects.get(email=email)
+                otp.get_expiration()
+                # Save the OTP object to the database
+                otp.save()
                 
                 send_mail(
                     subject = 'Beatify Plus one-time password',
                     message = f'please enter this code to continue. (code:{otp.code})',
                     from_email = 'email@hip-hop-tweety.com',
-                    recipient_list = [str(email)],
+                    recipient_list = [str(otp.email)],
                     fail_silently = False
                 )
-                
                 # Return a successful response with the token
                 return Response(
                     {
@@ -135,51 +148,56 @@ class CheckOtp(APIView):
             # Get the OTP object from the database using the provided token
             otp = get_object_or_404(Otp, token=token)
             if otp:
-                # Serialize the request data using the OtpSerializer
-                serializer = serializers.OtpSerializer(data=request.data)
-                if serializer.is_valid(raise_exception=True):
-                    # Extract the code from the validated data
-                    code = serializer.validated_data['code']
-                    # Check if the OTP code matches the provided code
-                    if otp.code == code:
-                        # Mark the OTP as used
-                        otp.is_used = True
-                        otp.save()
-                        # Create a new user using the OTP details
-                        user = User.objects.create_user(
-                            email=otp.email,
-                            username=otp.username,
-                            password=otp.password,
-                            user_type=otp.user_type
-                        )
-                        user.save()
-                        # Authenticate the user
-                        authenticate(user)
-                        # Generate a refresh token for the user
-                        token = RefreshToken.for_user(user)
-                        # Return a success response with the tokens
-                        return Response(
-                            {
-                                'Detail': {
-                                    'Message': 'User created successfully',  # Return a success message
-                                    'Token': {
-                                        'refresh': str(token),  # Return the refresh token
-                                        'access': str(token.access_token)  # Return the access token
+                otp.status_validation()
+                if otp.status == 'ACT':
+                    # Serialize the request data using the OneTimePasswordSerializer
+                    serializer = serializers.OneTimePasswordSerializer(data=request.data)
+                    if serializer.is_valid(raise_exception=True):
+                        # Extract the code from the validated data
+                        code = serializer.validated_data['code']
+                        # Check if the OTP code matches the provided code
+                        if otp.code == code:
+                            # Create a new user using the OTP details
+                            user = User.objects.create_user(
+                                email=otp.email,
+                                username=otp.username,
+                                password=otp.password,
+                                user_type=otp.user_type
+                            )
+                            user.save()
+                            # Authenticate the user
+                            authenticate(user)
+                            # Generate a refresh token for the user
+                            token = RefreshToken.for_user(user)
+                            # Return a success response with the tokens
+                            return Response(
+                                {
+                                    'Detail': {
+                                        'Message': 'User created successfully',  # Return a success message
+                                        'Token': {
+                                            'refresh': str(token),  # Return the refresh token
+                                            'access': str(token.access_token)  # Return the access token
+                                        }
                                     }
-                                }
-                            }, status=status.HTTP_201_CREATED
-                        )
+                                }, status=status.HTTP_201_CREATED
+                            )
+                        else:
+                            # Return an error response if the OTP code is invalid
+                            return Response(
+                                {'Detail': 'otp code is invalid'},
+                                status=status.HTTP_400_BAD_REQUEST
+                            )
                     else:
-                        # Return an error response if the OTP code is invalid
+                        # Return an error response if the serializer is invalid
                         return Response(
-                            {'Detail': 'otp code is invalid'},
+                            {'Detail': serializer.errors},
                             status=status.HTTP_400_BAD_REQUEST
                         )
                 else:
-                    # Return an error response if the serializer is invalid
                     return Response(
-                        {'Detail': serializer.errors},
-                        status=status.HTTP_400_BAD_REQUEST
+                        {
+                            'Detail':'One time password is expired'
+                        }, status=status.HTTP_400_BAD_REQUEST
                     )
             else:
                 # Return an error response if the OTP does not exist

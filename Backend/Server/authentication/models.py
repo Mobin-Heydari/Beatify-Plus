@@ -18,12 +18,9 @@ class Otp(models.Model):
         default=OtpStatus.ACTIVE 
     )
     
-    email = models.EmailField(unique=True)
+    email = models.EmailField()
     
-    username = models.CharField( 
-        max_length=40,
-        unique=True
-    )
+    username = models.CharField(max_length=40)
     
     user_type = models.CharField(max_length=3)
     
@@ -38,8 +35,12 @@ class Otp(models.Model):
     code = models.CharField(max_length=6)
     
     expiration = models.DateTimeField(
-        default=timezone.now() + timezone.timedelta(minutes=1)
+        blank=True,
+        null=True,
     )
+    
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     
     class Meta:
         verbose_name = "One-Time Password"
@@ -48,20 +49,24 @@ class Otp(models.Model):
     
     def __str__(self):
         return f'{self.status}----{self.code}----{self.token}'
+    
+    
+    def get_expiration(self):
         
+        created = self.created
+        
+        expiration = created + timezone.timedelta(minutes=1)
+        
+        self.expiration = expiration
+        
+        self.save()
         
     def status_validation(self):
         
-        if self.expiration >= timezone.now():
+        if self.expiration <= timezone.now():
             
-            self.status = self.OtpStatus.EXPIRED
+            self.status = 'EXP'
             
-            if self.status == self.OtpStatus.EXPIRED:
-        
-                self.delete()
-                
-                return 'Deleted'
-            else:
-                return 'Is not expired'
+            return self.status
         else:
-            return 'Is not expired'
+            return self.status

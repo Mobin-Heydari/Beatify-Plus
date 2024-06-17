@@ -1,5 +1,4 @@
 from django.contrib.auth.password_validation import validate_password
-from django.utils.crypto import get_random_string
 
 from rest_framework import serializers
 from rest_framework import validators
@@ -8,9 +7,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from users.models import User
 
-from .models import Otp
 
-from random import randint
 
 
 class TokenObtainSerializer(TokenObtainPairSerializer):
@@ -56,7 +53,7 @@ class UserLoginSerializer(serializers.Serializer):
 
 
     
-class UserRegisterSerializer(serializers.Serializer):
+class RegisterSerializer(serializers.Serializer):
     """
     Serializer for user registration
     """
@@ -109,29 +106,6 @@ class UserRegisterSerializer(serializers.Serializer):
         else:
             raise serializers.ValidationError({"Detail": "Passwords fields didn't match."})
     
-    def create(self, validated_data):
-
-        # Create a new OTP object and save it to the database
-
-        # Generate a random code and token
-        code = randint(100000, 999999)
-        token = get_random_string(250)
-        
-        # Create a new OTP object with the validated data
-        otp = Otp.objects.create(
-            email=validated_data['email'],
-            username=validated_data['username'],
-            user_type=validated_data['user_type'],
-            password=validated_data['password'],
-            token=token,
-            code=code
-        )
-        
-        # Save the OTP object to the database
-        otp.save()
-        
-        return otp
-    
-class OtpSerializer(serializers.Serializer):
+class OneTimePasswordSerializer(serializers.Serializer):
     
     code = serializers.CharField(write_only=True, required=True)
