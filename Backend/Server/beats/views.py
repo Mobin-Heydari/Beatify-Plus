@@ -154,8 +154,11 @@ class BeatViewSet(ViewSet, BeatPagination):
         if request.user.is_authenticated:
             # Check object permissions using the permission classes
             self.check_object_permissions(request, queryset)
-            # Delete the beat instance using ORM
+            # Getting the beat info 
+            info = BeatInformation.objects.get(beat=queryset)
+            # Delete the beat and beat info instance using ORM
             queryset.delete()
+            info.delete()
             # Returning the deleted response
             return Response(
                 {
