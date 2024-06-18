@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers import UserManager
-from profiles.models import UserProfile
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -44,7 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
     
-    #  Our custome user manager
+    #  Our costume user manager
     objects = UserManager()
     
     class Meta:
@@ -68,6 +67,3 @@ class User(AbstractBaseUser, PermissionsMixin):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
-    
-    # def user_profile(self):
-    #     profile = UserProfile.objects.get(user=self)
