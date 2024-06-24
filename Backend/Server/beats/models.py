@@ -1,5 +1,9 @@
 from django.db import models
+
 from users.models import User
+from moods.models import Mood
+from tags.models import Tag
+
 from . import managers
 
 
@@ -40,6 +44,15 @@ class Beat(models.Model):
         blank=True,
         null=True
     )  # Foreign key to the User model
+    
+    #  Foreign key to the category witch is the same genre and type of the beat
+    category = models.ForeignKey(
+        'categories.Category',
+        on_delete=models.CASCADE,
+        related_name='Beat_Category',
+        blank=True,
+        null=True
+    )
 
     # Title of the Beat
     title = models.CharField(
@@ -76,6 +89,16 @@ class Beat(models.Model):
         blank=True,
         null=True
     )  # Field to store the description of the Beat
+    
+    moods = models.ManyToManyField(
+        Mood, 
+        blank=True
+    )
+    
+    tags = models.ManyToManyField(
+        Tag,
+        blank=True
+    )
 
     # Timestamp when the Beat was created
     created = models.DateTimeField(auto_now_add=True)
