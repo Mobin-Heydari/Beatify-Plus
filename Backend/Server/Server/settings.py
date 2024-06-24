@@ -32,10 +32,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # Beatify applications
+    'tags.apps.TagsConfig',
     'users.apps.UsersConfig',
-    'authentication.apps.AuthenticationConfig',
-    'profiles.apps.ProfilesConfig',
     'beats.apps.BeatsConfig',
+    'moods.apps.MoodsConfig',
+    'profiles.apps.ProfilesConfig',
+    'categories.apps.CategoriesConfig',
+    'authentication.apps.AuthenticationConfig',
     
     # Third party applications
     'rest_framework',
