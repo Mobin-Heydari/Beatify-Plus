@@ -10,4 +10,5 @@ urlpatterns = [
     path('beats/', include('beats.urls', namespace="beats")),
     path('users/', include('users.urls', namespace="users")),
     path('categories/', include('categories.urls', namespace="categories")),
+    path('moods/', include('moods.urls', namespace="moods")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
