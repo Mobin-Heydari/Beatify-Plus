@@ -5,7 +5,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework import status
 
 from . import serializers
-from .models import Beat, BeatInformation
+from .models import Beat, BeatInformation, BeatCategorisation
 from .paginations import BeatPagination
 from .permissions import IsOwnerOrReadOnly
 
@@ -36,7 +36,6 @@ class BeatViewSet(ViewSet, BeatPagination):
         # Return the paginated response
         return self.get_paginated_response(serializer.data)
 
-
     def retrieve(self, request, pk):
         """
         Retrieve a single beat by slug (pk)
@@ -59,7 +58,6 @@ class BeatViewSet(ViewSet, BeatPagination):
                 },
                 status=status.HTTP_403_FORBIDDEN
             )
-
 
     def create(self, request):
         """
@@ -103,7 +101,6 @@ class BeatViewSet(ViewSet, BeatPagination):
                 status=status.HTTP_401_UNAUTHORIZED
             )
 
-
     def update(self, request, pk):
         """
         Update a beat
@@ -121,9 +118,7 @@ class BeatViewSet(ViewSet, BeatPagination):
             
             # If the data is valid, update the instance and return a 200 OK response
             if serializer.is_valid(raise_exception=True):
-                
                 serializer.update(instance=queryset, validated_data=serializer.validated_data)
-                
                 return Response(
                     serializer.data,
                     status=status.HTTP_200_OK
@@ -145,7 +140,7 @@ class BeatViewSet(ViewSet, BeatPagination):
             
     def delete(self, request, pk):
         """
-        Update a beat
+        Delete a beat
         """
         # Get the beat instance by slug (pk)
         queryset = get_object_or_404(Beat, slug=pk)
@@ -154,12 +149,19 @@ class BeatViewSet(ViewSet, BeatPagination):
         if request.user.is_authenticated:
             # Check object permissions using the permission classes
             self.check_object_permissions(request, queryset)
-            # Getting the beat info 
+            
+            # Retrieve related objects: BeatInformation and BeatCategorisation
             info = BeatInformation.objects.get(beat=queryset)
-            # Delete the beat and beat info instance using ORM
-            queryset.delete()
+            categorisation = BeatCategorisation.objects.get(beat=queryset)
+            
+            # Delete the related objects using ORM
             info.delete()
-            # Returning the deleted response
+            categorisation.delete()
+            
+            # Delete the beat instance using ORM
+            queryset.delete()
+            
+            # Return a 200 OK response with a success message
             return Response(
                 {
                     'Detail':'Deleted'
@@ -174,4 +176,3 @@ class BeatViewSet(ViewSet, BeatPagination):
                 },
                 status=status.HTTP_401_UNAUTHORIZED
             )
-            
