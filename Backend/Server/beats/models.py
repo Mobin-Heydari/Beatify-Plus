@@ -1,5 +1,6 @@
 from django.db import models
 
+from categories.models import Category
 from users.models import User
 from moods.models import Mood
 from tags.models import Tag
@@ -44,15 +45,6 @@ class Beat(models.Model):
         blank=True,
         null=True
     )  # Foreign key to the User model
-    
-    #  Foreign key to the category witch is the same genre and type of the beat
-    category = models.ForeignKey(
-        'categories.Category',
-        on_delete=models.CASCADE,
-        related_name='Beat_Category',
-        blank=True,
-        null=True
-    )
 
     # Title of the Beat
     title = models.CharField(
@@ -89,16 +81,6 @@ class Beat(models.Model):
         blank=True,
         null=True
     )  # Field to store the description of the Beat
-    
-    moods = models.ManyToManyField(
-        Mood, 
-        blank=True
-    )
-    
-    tags = models.ManyToManyField(
-        Tag,
-        blank=True
-    )
 
     # Timestamp when the Beat was created
     created = models.DateTimeField(auto_now_add=True)
@@ -178,3 +160,39 @@ class BeatInformation(models.Model):
     def __str__(self):
         # Returns a string representation of the BeatInformation
         return f'{self.publish}-{self.beat.title}'
+    
+
+class BeatCategorisation(models.Model):
+    # One-to-one field to the Beat model
+    beat = models.OneToOneField(
+        Beat,
+        on_delete=models.CASCADE,
+        related_name='Beat_Categorisation'
+    )  # Link to the Beat model
+    
+    #  Foreign key to the category witch is the same genre and type of the beat
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE,
+        related_name='Beat_Categorisation_Category'
+    )
+    
+    moods = models.ManyToManyField(
+        Mood, 
+        blank=True
+    )
+    
+    tags = models.ManyToManyField(
+        Tag,
+        blank=True
+    )
+    
+    class Meta:
+        ordering = ['beat']
+        verbose_name = 'Beat Categorisation'
+        verbose_name_plural = 'Beat Categorisations'
+    
+    
+    def __str__(self):
+        return f'{self.beat.title}---{self.category.category}'
+    
