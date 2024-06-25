@@ -134,21 +134,20 @@ class BeatCategorisationSerializer(serializers.ModelSerializer):
     
     # Serialize the moods field
     moods = MoodSerializer(
-        read_only=True,
         many=True
     )
     
     # Serialize the tags field
     tags = TagSerializer(
-        read_only=True,
         many=True
     )
-    
-    # Serialize the Category instance
-    def get_category(self, obj):
-        serializer = CategorySerializer(instance=obj.category)
-        return serializer.data
     
     class Meta:
         model = BeatCategorisation
         fields = "__all__"
+        
+        
+    # Serialize the Category instance
+    def get_category(self, obj):
+        serializer = CategorySerializer(instance=obj.category)
+        return serializer.data
