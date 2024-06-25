@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'profiles.apps.ProfilesConfig',
     'categories.apps.CategoriesConfig',
     'authentication.apps.AuthenticationConfig',
+    'categorisations.apps.CategorisationsConfig',
     
     # Third party applications
     'rest_framework',
