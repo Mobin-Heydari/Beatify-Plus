@@ -10,7 +10,7 @@ app_name = "beats"
 
 
 urlpatterns = [
-    path('categoriations/add-mood/<slug:slug>/', views.CategorisationMoodAddView.as_view(), name="categoriations_add_mood")
+    
 ]
 
 

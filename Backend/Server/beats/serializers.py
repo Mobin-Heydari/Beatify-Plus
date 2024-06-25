@@ -1,16 +1,13 @@
+from django.shortcuts import get_object_or_404
+
 from rest_framework import serializers
 
-from .models import Beat, BeatInformation, BeatCategorisation
+from .models import Beat, BeatInformation
 
 from categories.models import Category
-from categories.serializers import CategorySerializer
-from moods.serializers import MoodSerializer
-from tags.serializers import TagSerializer
 from users.serializers import UserSerializer
-
-
-
-
+from categorisations.serializers import BeatCategorisationSerializer
+from categorisations.models import BeatCategorisation
 
 class BeatSerializer(serializers.ModelSerializer):
     # Define a serializer method field for the info field
@@ -26,10 +23,11 @@ class BeatSerializer(serializers.ModelSerializer):
     beat_file = serializers.FileField()
     image = serializers.FileField()
 
+
     class Meta:
         # Specify the model and fields for the serializer
         model = Beat
-        fields = '__all__'
+        fields = ['id', 'title', 'description',  'slug', 'beat_file', 'image', 'owner', 'info',  'categorisation']
 
     # Serialize the BeatInformation instance
     def get_info(self, obj):
@@ -48,7 +46,8 @@ class BeatSerializer(serializers.ModelSerializer):
     # Serialize the BeatCategorisation instance
     def get_categorisation(self, obj):
         # Create a serializer instance for the BeatCategorisation model
-        serializer = BeatCategorisationSerializer(instance=obj.Beat_Categorisation)
+        queryset = BeatCategorisation.objects.get(beat=obj)
+        serializer = BeatCategorisationSerializer(instance=queryset)
         # Return the serialized data
         return serializer.data
 
@@ -76,10 +75,8 @@ class BeatSerializer(serializers.ModelSerializer):
         # Save the BeatInformation instance
         beat_info.save()
 
-        # Get the category name from the validated data
-        category_name = validated_data['category']
         # Get the Category instance from the database
-        category = Category.objects.get(category=category_name)
+        category = Category.objects.get(category=validated_data['category'])
         # Create a new BeatCategorisation instance
         beat_categorisation = BeatCategorisation.objects.create(
             beat=beat,
@@ -101,6 +98,7 @@ class BeatSerializer(serializers.ModelSerializer):
         if 'title' in validated_data:
             instance.slug = f'{instance.owner.username}-{validated_data["title"]}'
 
+
         # Save the changes
         instance.save()
 
@@ -119,35 +117,8 @@ class BeatSerializer(serializers.ModelSerializer):
 
         # Return the updated Beat instance
         return instance
-
-
 class BeatInformationSerializer(serializers.ModelSerializer):
     # Specify the model and fields for the serializer
     class Meta:
         model = BeatInformation
         fields = "__all__"
-
-
-class BeatCategorisationSerializer(serializers.ModelSerializer):
-    # Serialize the category field
-    category = serializers.SerializerMethodField()
-    
-    # Serialize the moods field
-    moods = MoodSerializer(
-        many=True
-    )
-    
-    # Serialize the tags field
-    tags = TagSerializer(
-        many=True
-    )
-    
-    class Meta:
-        model = BeatCategorisation
-        fields = "__all__"
-        
-        
-    # Serialize the Category instance
-    def get_category(self, obj):
-        serializer = CategorySerializer(instance=obj.category)
-        return serializer.data
