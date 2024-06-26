@@ -25,7 +25,7 @@ class License(models.Model):
 
 
 # LicenseFiles model, represents a file associated with a license
-class LicenseFiles(models.Model):
+class LicenseFile(models.Model):
     
     # Foreign key to the License model, represents the license that this file belongs to
     license_model = models.ForeignKey(
@@ -52,7 +52,7 @@ class LicenseFiles(models.Model):
 
 
 # BeatLicenses model, represents the licenses associated with a beat
-class BeatLicenses(models.Model):
+class BeatLicense(models.Model):
     
     # Foreign key to the Beat model, represents the beat that these licenses belong to
     beat = models.ForeignKey(
