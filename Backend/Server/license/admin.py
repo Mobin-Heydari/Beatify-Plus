@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from . import models
+
+
+admin.site.register(models.BeatLicense)
+admin.site.register(models.License)
+admin.site.register(models.LicenseFile)
