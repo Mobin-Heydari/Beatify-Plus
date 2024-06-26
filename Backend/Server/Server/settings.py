@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'categories.apps.CategoriesConfig',
     'authentication.apps.AuthenticationConfig',
     'categorisations.apps.CategorisationsConfig',
+    'license.apps.LicenseConfig',
     
     # Third party applications
     'rest_framework',
