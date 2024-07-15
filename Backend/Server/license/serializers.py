@@ -32,7 +32,27 @@ class LicenseSerializer(serializers.ModelSerializer):
     def get_license_files(self, obj):
         license_files = LicenseFile.objects.filter(license_model_id=obj.id)
         return list(license_files)
+    
+    def create(self, validated_data):
         
+        beat = self.context['beat']
+        
+        vd =validated_data
+        
+        _license = License.objects.create(
+            title = vd['title'],
+            price = vd['price'],
+            description = cd['description']
+        )
+        
+        _license.save()
+        
+        beat_license = BeatLicense.objects.get(beat=beat)
+        
+        
+        beat_license.licenses.add(_license)
+        
+        return beat_license
 
 
 class BeatLicenseSerializer(serializers.ModelSerializer):
