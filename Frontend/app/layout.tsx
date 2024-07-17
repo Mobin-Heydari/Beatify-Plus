@@ -16,6 +16,8 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="dracula" dir="rtl">
+      <head>
+      </head>
       <body>
         <Navbar />
         {children}

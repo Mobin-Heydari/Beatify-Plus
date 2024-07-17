@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@font-face {
+  font-family: sahelNormal;
+  src: url('/assets/fonts/Sahel.woff') format('woff');
+  font-weight: normal;
+}
+      
+@font-face {
+  font-family: sahelBold;
+  src: url('/assets/fonts/Sahel-Bold.woff') format('woff');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: sahelBlack;
+  src:url('/assets/fonts/Sahel-Black.woff') format('woff');
+  font-weight: 900;
+}
+
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -24,6 +44,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+    font-family: sahelNormal;
 }
 
 @layer utilities {
