@@ -1,19 +1,16 @@
 import React from "react";
-import MainDropDown from "./mainDropDown";
-import NavigatingBar from "./navItems";
-import ProfileDropDown from "./profileDropDown";
-import CartDropDown from "./cart";
+
+import ProfileDropDown from "./profiledropdown";
 
 
 export default function Navbar() {
     return (
-        <nav className="navbar bg-base-100">
-            <NavigatingBar />
-            <MainDropDown />
-            <div className="navbar-end">
-                <CartDropDown />
-                <ProfileDropDown />
+        <nav className="navbar">
+            <div className="search-bar">
+                <i></i>
+                <input type="text" placeholder="Search..."/>
             </div>
+            <ProfileDropDown />
         </nav>
     );
   }

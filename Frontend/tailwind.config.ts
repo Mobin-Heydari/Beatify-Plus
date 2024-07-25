@@ -19,7 +19,17 @@ const config: Config = {
     require('daisyui'),
   ],
   daisyui: {
-    themes: ["dracula"],
+    themes: [
+      {
+        mytheme: {
+          "primary": "#1B1A55",
+          "secondary": "#535C91",
+          "accent": "#9290C3",
+          "neutral": "#dddddd",
+          "base-100": "#070F2B",
+        },
+      },
+    ],
   },
 };
 export default config;

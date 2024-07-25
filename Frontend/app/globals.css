@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
   font-family: sahelNormal;
   src: url('/assets/fonts/Sahel.woff') format('woff');
@@ -21,34 +20,98 @@
   font-weight: 900;
 }
 
-
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --base: #070F2B;
+  --primary: #1B1A55;
+  --secondary: #535C91;
+  --accent: #9290C3;
+  --neutral: #dddddd;
+  --title: #cffcfc;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
+
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-    font-family: sahelNormal;
+  padding: auto;
+  font-family: sahelNormal;
+  background-color: --base;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+
+  position: relative;
+  padding: 1rem;
+
+  background-color: var(--primary);
+  border-radius: 40px;
+  border-color: #070F2B;
+  border-width: 5px;
+
+  width: 100%;
+  height: 75px;
+}
+
+
+.profile-drop-down-items {
+  background-color: var(--primary);
+  border-radius: 15px;
+  width: 220px;
+  margin-top: 15px;
+  padding: 10px;
+  box-shadow: 0px 3px 0.3px var(--base);
+}
+
+.profile-drop-down-items .profile-section {
+  display: flex;
+  border-radius: 12px;
+  margin: 10px 3px 15px 3px; 
+}
+
+.profile-drop-down-items .profile-section a {
+  color: var(--title);
+  text-decoration: none;
+}
+
+.profile-drop-down-items .profile-section .profile-avatar {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.profile-drop-down-items .profile-section .username {
+  display: inline-block;
+  font-family: sahelBold;
+  font-size: large;
+}
+
+.navbar-items {
+  display: flexbox;
+  background-color: var(--primary);
+  border-radius: 10px;
+  margin: 10px 3px 5px 3px;
+  text-align: center;
+  font-family: sahelBold;
+}
+
+.navbar-items a {
+  display: flex;
+  text-align: center;
+  
+}
+
+.navbar-items a p {
+  color: var(--title);
+  padding: auto;
+}
+
+.navbar-items a img {
+  display: inline-block;
+  color: var(--title);
+  padding: 0px;
+  margin-left: 10px;
+  width: 43px;
 }
