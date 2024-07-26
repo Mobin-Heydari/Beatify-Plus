@@ -1,15 +1,12 @@
 import React from "react";
 
 import ProfileDropDown from "./profiledropdown";
-
+import SearchBar from "./searchbar";
 
 export default function Navbar() {
     return (
         <nav className="navbar">
-            <div className="search-bar">
-                <i></i>
-                <input type="text" placeholder="Search..."/>
-            </div>
+            <SearchBar></SearchBar>
             <ProfileDropDown />
         </nav>
     );

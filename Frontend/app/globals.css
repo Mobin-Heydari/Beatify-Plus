@@ -40,7 +40,7 @@ body {
 
 .navbar {
   display: flex;
-  justify-content: space-between;
+  justify-content:space-between;
 
   position: relative;
   padding: 1rem;
@@ -114,4 +114,33 @@ body {
   padding: 0px;
   margin-left: 10px;
   width: 43px;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  padding: 10px;
+  border-radius: 20px;
+  border-width: 2px;
+  border-color: var(--secondary);
+  background-color: var(--primary);
+  padding: auto;
+  text-align: center;
+}
+
+.search-bar input {
+  font-size: large;
+  font-family: sahelBold;
+  text-align: center;
+  padding: auto;
+  border-radius: 20px;
+  background-color: var(--primary);
+}
+
+.search-bar img {
+  width: 42px;
+  background-color: var(--primary);
+  border-radius: 50%;
 }
