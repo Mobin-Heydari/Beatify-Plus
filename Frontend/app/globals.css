@@ -32,9 +32,9 @@
 
 
 body {
-  padding: auto;
+  padding: 10px;
   font-family: sahelNormal;
-  background-color: --base;
+  background-color: var(--base);
 }
 
 
@@ -54,6 +54,14 @@ body {
   height: 75px;
 }
 
+
+.navbar .dorp-down-nav-contents {
+  display: flex;
+  justify-content: right;
+  justify-self: right;
+  justify-items: center;
+
+}
 
 .profile-drop-down-items {
   background-color: var(--primary);
@@ -143,4 +151,80 @@ body {
   width: 42px;
   background-color: var(--primary);
   border-radius: 50%;
+}
+
+
+.cart-dropdown-items {
+  background-color: var(--primary);
+  border-radius: 15px;
+  width: 250px;
+  margin-top: 15px;
+  padding: 10px;
+  box-shadow: 0px 3px 0.3px var(--base);
+}
+
+.cart-dropdown-items .item-count {
+  padding: 5px;
+  border-radius: 10px;
+  text-align: right;
+  margin: 3px 2px 5px 2px;
+  font-family: sahelBold;
+  font-size: medium;
+}
+
+.cart-dropdown-items .total-price {
+  padding: 5px;
+  border-radius: 10px;
+  text-align: right;
+  margin: 3px 2px 5px 2px;
+  font-family: sahelBold;
+  font-size: medium;
+}
+
+.cart-dropdown-items .buttons{
+  display: flex;
+  justify-content: space-around;
+  padding: 5px;
+}
+
+.cart-dropdown-items a {
+  width: 75px;
+  height: 50px;
+  border-radius: 10px;
+}
+
+.cart-dropdown-items .view {
+  width: 75px;
+  height: 50px;
+  border-radius: 10px;
+  border-color: var(--primary);
+  background-color: var(--secondary);
+  text-align: center;
+  color: var(--title);
+  transition: 0.3s;
+}
+
+.cart-dropdown-items .pay {
+  width: 75px;
+  height: 50px;
+  border-radius: 10px;
+  border-color: var(--primary);
+  background-color: var(--secondary);
+  text-align: center;
+  color: var(--title);
+  transition: 0.3s;
+}
+
+.cart-dropdown-items .view:hover {
+  background-color: var(--neutral);
+  color: dimgray;
+  width: 90px;
+  border-radius: 20px;
+}
+
+.cart-dropdown-items .pay:hover {
+  background-color: greenyellow;
+  color: dimgray;
+  width: 90px;
+  border-radius: 20px;
 }
