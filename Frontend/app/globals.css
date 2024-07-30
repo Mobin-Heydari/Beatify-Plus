@@ -40,6 +40,7 @@ body {
 
 .navbar {
   display: flex;
+  grid-area: navbar;
   justify-content:space-between;
 
   position: relative;
@@ -125,11 +126,8 @@ body {
 }
 
 .search-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 20px;
+  padding: 0px;
   border-radius: 20px;
   border-width: 2px;
   border-color: var(--secondary);
@@ -139,7 +137,7 @@ body {
 }
 
 .search-bar input {
-  font-size: large;
+  font-size: larger;
   font-family: sahelBold;
   text-align: center;
   padding: auto;
@@ -227,4 +225,19 @@ body {
   color: dimgray;
   width: 90px;
   border-radius: 20px;
+}
+
+.drawer-menu {
+  width: 64px;
+}
+
+.drawer-menu img {
+  width: 64px;
+}
+
+aside ul{
+  width: 50%;
+  height: 100%;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
