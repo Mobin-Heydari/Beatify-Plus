@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import Navbar from '@/components/ui/navbar';
+import MainSideBar from "@/components/ui/sidebar";
 
 import "./globals.css";
 
@@ -15,11 +15,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-theme="dracula" dir="rtl">
+    <html lang="fa" dir="rtl">
       <head>
       </head>
       <body>
-        <Navbar />
+        <MainSideBar />
         {children}
       </body>
     </html>
