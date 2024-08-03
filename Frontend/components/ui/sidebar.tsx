@@ -14,8 +14,6 @@ export default function MainSideBar() {
 
     const [closeMenu, setCloseMenu] = useState(true)
 
-    console.log(closeMenu)
-
     const HandelCloseMenu = () => {
         setCloseMenu(!closeMenu)
     }
@@ -33,7 +31,7 @@ export default function MainSideBar() {
             <div className="profile-container">
                 <img src="assets/images/User.png" alt="user" />
                 <div className="profile-content">
-                    <p className="name">john</p>
+                    <p className="name">مبین</p>
                     <p className="email">szpm@gmail.com</p>
                 </div>
             </div>
@@ -41,23 +39,23 @@ export default function MainSideBar() {
                 <ul>
                     <li className="active">
                         <img src="assets/images/icons/album.png" alt="album" />
-                        <a href="">album</a>
+                        <a href="">آلبوم ها</a>
                     </li>
                     <li>
                         <img src="assets/images/icons/beat.png" alt="beat" />
-                        <a href="">beat</a>
+                        <a href="">بیت ها</a>
                     </li>
                     <li>
                         <img src="assets/images/icons/musics.png" alt="musics" />
-                        <a href="">musics</a>
+                        <a href="">موزیک ها</a>
                     </li>
                     <li>
                         <img src="assets/images/icons/micro.png" alt="singer" />
-                        <a href="">singer</a>
+                        <a href="">خواننده ها</a>
                     </li>
                     <li>
                         <img src="assets/images/icons/guitar.png" alt="musician" />
-                        <a href="">musician</a>
+                        <a href="">موزیسین ها</a>
                     </li>
                 </ul>
             </div>

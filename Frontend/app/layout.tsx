@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import MainSideBar from "@/components/ui/sidebar";
+import NavBar from "@/components/ui/navbar";
 
 import "./globals.css";
 
@@ -19,6 +20,7 @@ export default async function RootLayout({
       <head>
       </head>
       <body>
+        <NavBar />
         <MainSideBar />
         {children}
       </body>

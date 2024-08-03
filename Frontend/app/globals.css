@@ -19,15 +19,26 @@
 :root {
   --base: #070F2B;
   --primary: #1B1A55;
-  --secondary: #535C91;
-  --accent: #9290C3;
-  --neutral: #dddddd;
-  --title: #cffcfc;
+  --secondary: #241663;
+  --accent: #535C91;
+  --neutral: #9290C3;
+  --pay: #41B06E;
+  --hover: #00B7C2;
+
+
+  --title: #929AAB;
+  --hover-title: #0E0220;
 }
 
 
 body {
-  padding: 0px;
+  display: grid;
+  grid-template-areas:
+    'sidebar navbar navbar navbar navbar navbar'
+    'sidebar main main main main main'
+    'sidebar footer footer footer footer footer';
+  padding: 10px;
+  margin: 0px;
   font-family: sahelNormal;
   background-color: var(--base);
   direction: rtl;
@@ -36,6 +47,7 @@ body {
 
 /* Side Bar start here */
 .sidebar {
+  grid-area: sidebar;
   background-color: var(--primary);
   position: absolute;
   top: 0;
@@ -51,7 +63,7 @@ body {
 .sidebar .logo-container {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-around;
   transition: 0.2s all;
 }
 
@@ -64,7 +76,7 @@ body {
 /* Burger */
 .sidebar .burger-container {
   content: '';
-  background-color: var(--secondary);
+  background-color: var(--primary);
   position: absolute;
   left: calc(-35px / 2);
   top: calc(9rem / 1.15);
@@ -82,7 +94,7 @@ body {
   top: calc(35px /2);
   z-index: 0;
   width: calc(6rem + 15rem);
-  background-color: var(--primary);
+  background-color: var(--accent);
   height: 2px;
   transition: 0.5s all;
 }
@@ -91,7 +103,7 @@ body {
   content: '';
   width: 35px;
   height: 35px;
-  background-color: var(--secondary);
+  background-color: var(--accent);
   cursor: pointer;
   z-index: 6;
   opacity: 0;
@@ -101,7 +113,7 @@ body {
 
 .sidebar .burger-container .burger-menu {
   content: '';
-  background-color: var(--secondary);
+  background-color: var(--primary);
   position: relative;
   z-index: 1;
   width: 20px;
@@ -114,7 +126,7 @@ body {
 
 .sidebar .burger-container .burger-menu::after {
   content: '';
-  background-color: var(--primary);
+  background-color: var(--accent);
   position: absolute;
   width: 20px;
   height: 3px;
@@ -126,7 +138,7 @@ body {
 
 .sidebar .burger-container .burger-menu::before {
   content: '';
-  background-color: var(--primary);
+  background-color: var(--accent);
   position: absolute;
   width: 20px;
   height: 3px;
@@ -141,7 +153,7 @@ body {
 .sidebar .profile-container {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   padding: 3rem 0px 0px 0px;
   transition: 0.7s all;
 }
@@ -202,20 +214,23 @@ body {
 }
 
 .sidebar .content-container ul li.active a {
-  color: var(--primary);
+  color: var(--title);
   transition: 0.5s all;
 }
 
 .sidebar .content-container ul li:hover {
-  background-color: var(--accent);
+  background-color: var(--hover);
   border-radius: 20px;
   transition: 0.55s all;
+  a {
+    color: var(--hover-title);
+  }
 }
 
 .sidebar .content-container ul li {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-around;
   flex-direction: row;
   margin: 0.5rem 0rem;
   padding: 0.5rem 0rem;
@@ -265,7 +280,7 @@ body {
 }
 
 .sidebar.active .burger-container .burger-menu {
-  background-color: var(--primary);
+  background-color: var(--accent);
   transition: 0.3s all;
 }
 
@@ -299,7 +314,7 @@ body {
 }
 
 .sidebar.active .content-container ul li:hover {
-  background-color: var(--accent);
+  background-color: var(--hover);
   border-radius: 20px;
   transition: 0.8s all;
   a {
@@ -308,5 +323,180 @@ body {
     margin-right: 25px;
     color: var(--title);
     transition: 0.5s all;
+    
   }
 }
+
+
+.navbar {
+  grid-area: navbar;
+  display: flex;
+  justify-content: space-between;
+  justify-self: center;
+  justify-items: center;
+  background-color: var(--primary);
+  border-radius: 20px;
+  height: 80px;
+  width: 80%;
+}
+
+.navbar .cart-container {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 30%;
+  width: 50px;
+  height: 50%;
+  position: relative;
+  top: 10px;
+  left: 10px;
+}
+
+.navbar .cart-container .icon{
+  display: flex;
+  position: relative;
+  justify-content: center;
+  cursor: pointer;
+  align-self: center;
+  width: 100%;
+  border-radius: 50%;
+}
+
+.navbar .cart-container .icon img {
+  width: 60px;
+  height: 60px;
+}
+
+
+.navbar .cart-container .cart-drop-down {
+  display: flex;
+  justify-content: flex-start;
+  width: 230px;
+  height: 350px;
+  background-color: var(--primary);
+  position: absolute;
+  top: 5.0rem;
+  left: 0rem;
+  border-radius: 20px;
+
+  transition: 0.5s all;
+  
+  justify-content: space-around;
+  flex-direction: column;
+
+  .cart-detail {
+
+    margin: 5px;
+
+    .price {
+      display: flex;
+      justify-content: space-evenly;
+      color: var(--title);
+      padding: 10px;
+      margin: 5px 5px 10px 5px;
+      background-color: var(--secondary);
+      border-radius: 15px;
+      
+      p {
+        font-family: sahelNormal;
+        font-size: medium;
+        
+        span {
+          font-family: sahelBold;
+          font-size: larger;
+        }
+      }
+    }
+    
+    .quantity {
+      display: flex;
+      justify-content: space-evenly;
+      color: var(--title);
+      padding: 10px;
+      margin: 10px 5px 5px 5px;
+      background-color: var(--secondary);
+      border-radius: 15px;
+
+      p {
+        font-family: sahelNormal;
+        font-size: medium;
+
+        span {
+          font-family: sahelBold;
+          font-size: larger;
+        }
+      }
+    }
+
+  }
+
+  .cart-actions {
+    display: flex;
+    justify-content: space-evenly;
+
+    a {
+      display: flex;
+      justify-content: center;
+      border-radius: 10px;
+      background-color: var(--secondary);
+      width: 75px;
+      padding: 10px;
+      text-decoration: none;
+      
+      p {
+        transition: 0.9999s all;
+        color: var(--title);
+        font-family: sahelBlack;
+        font-size: larger;
+      }
+
+    }
+
+    img {
+      display: none;
+      overflow: hidden;
+      width: 64px;
+      height: 64px;
+      transition: 0.5s all;
+    }
+
+    a.pay:hover {
+      background-color: var(--hover);
+      transition: 0.52s all;
+      width: 100px;
+
+      p{
+        display: none;
+        overflow: hidden;
+      }
+
+      img {
+        display: flex;
+        justify-self: center;
+      }
+    }
+    
+    a.view:hover {
+      background-color: var(--hover);
+      transition: 0.52s all;
+      width: 100px;
+
+      p {
+        display: none;
+        overflow: hidden;
+      }
+
+      img {
+        display: flex;
+        justify-self: center;
+        transition: 2s all;
+      }
+    }
+  }
+}
+
+.navbar .cart-container .inactive-cart-drop-down {
+  overflow: hidden;
+  transition: 0.5s all;
+}
+
