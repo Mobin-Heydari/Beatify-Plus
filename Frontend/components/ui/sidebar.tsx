@@ -1,31 +1,28 @@
 "use client";
 
 
+import sidebarContext from "@/contexts/sidebar-context";
 import React from "react";
-import { useState } from "react";
-import { useLocation } from "react-router";
-
+import { useState, useContext } from "react";
 
 
 
 export default function MainSideBar() {
 
-    const location = useLocation
+    const context = useContext(sidebarContext)
 
-    const [closeMenu, setCloseMenu] = useState(true)
-
-    const HandelCloseMenu = () => {
-        setCloseMenu(!closeMenu)
+    if (!context) {
+        throw new Error("Sidebar context is not provided");
     }
 
     return (
-        <aside className={closeMenu === false ? "sidebar" : "sidebar active"}>
+        <aside className={context.sidebarStatus === false ? "sidebar" : "sidebar active"}>
             <div className="logo-container">
                 <img src="assets/images/icons/beat.png" alt="logo" />
                 <h2>Beatify Plus</h2>
             </div>
             <div className="burger-container">
-                <div className="burger-trigger" onClick={()=>{HandelCloseMenu()}}></div>
+                <div className="burger-trigger" onClick={() => context.toggleSidebar()}></div>
                 <div className="burger-menu"></div>
             </div>
             <div className="profile-container">

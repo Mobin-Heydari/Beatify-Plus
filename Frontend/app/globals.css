@@ -338,6 +338,7 @@ body {
   border-radius: 20px;
   height: 80px;
   width: 80%;
+  transition: 0.9s all;
 }
 
 .navbar .cart-container {
@@ -500,3 +501,38 @@ body {
   transition: 0.5s all;
 }
 
+
+.navbar .mobile-sidebar-menu {
+  display: none;
+  img {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  
+  body {
+    grid-template-areas:
+    'navbar navbar navbar navbar navbar navbar'
+    'main main main main main main'
+    'footer footer footer footer footer footer'
+  }
+
+  .navbar {
+    transition: 0.9s all;
+    width: 100%;
+    .mobile-sidebar-menu {
+      display: flex;
+      justify-content: center;
+      cursor: pointer;
+      align-self: center;
+      border-radius: 50%;
+
+    }
+  }
+
+  .sidebar.active {
+    display: none;
+  }
+}
