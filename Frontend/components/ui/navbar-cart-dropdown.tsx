@@ -8,7 +8,7 @@ import { useState } from "react";
 export default function CartDropDown() {
 
     const [openCart, setOpenCart] = useState(false)
-    const HandelOpenCart = () => {
+    const HandelOpenCart = () => {+
         setOpenCart(!openCart)
     }
 
@@ -17,7 +17,7 @@ export default function CartDropDown() {
     return (
         <div className="cart-container">
             <div className="icon" onClick={() => {HandelOpenCart()}}>
-                <img src="assets/images/icons/cart.png" alt="" />
+                <img src={openCart === false ? "assets/images/icons/cart.png" : "assets/images/icons/x.png"} alt="" />
             </div>
             <div className={openCart === false ? "inactive-cart-drop-down" : "cart-drop-down"}>
                 <div className="cart-detail">
