@@ -35,6 +35,10 @@ export default function MainSideBar() {
             <div className="content-container">
                 <ul>
                     <li className="active">
+                        <img src="assets/images/icons/home.png" alt="home" />
+                        <a href="">خانه</a>
+                    </li>
+                    <li className="">
                         <img src="assets/images/icons/album.png" alt="album" />
                         <a href="">آلبوم ها</a>
                     </li>
