@@ -3,8 +3,8 @@
 import { useState } from "react";
 
 import sidebarContext from "@/contexts/sidebar-context";
-import NavBar from "@/components/ui/navbar/navbar";
-import MainSideBar from "@/components/ui/sidebar";
+import NavBar from "@/components/ui/Platform/navbar/navbar";
+import MainSideBar from "@/components/ui/Platform/sidebar";
 
 export default function SidebarNavbarProvider() {
   const [sidebarStatus, setSidebarStatus] = useState(true);

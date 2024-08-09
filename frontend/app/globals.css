@@ -1,0 +1,159 @@
+@font-face {
+    font-family: sahelNormal;
+    src: url('/assets/fonts/Sahel.woff') format('woff');
+    font-weight: normal;
+}
+    
+@font-face {
+    font-family: sahelBold;
+    src: url('/assets/fonts/Sahel-Bold.woff') format('woff');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: sahelBlack;
+    src:url('/assets/fonts/Sahel-Black.woff') format('woff');
+    font-weight: 900;
+}
+
+:root {
+    --base: #070F2B;
+    --primary: #1B1A55;
+    --secondary: #241663;
+    --accent: #535C91;
+    --neutral: #9290C3;
+    --pay: #41B06E;
+    --hover: #00B7C2;
+
+
+    --title: #929AAB;
+    --hover-title: #0E0220;
+}
+
+
+body {
+    padding: 5px;
+    background-color: var(--base);
+}
+
+.landing-navbar {
+    display: flex;
+    justify-content: space-between;
+
+    background-color: var(--primary);
+    
+    height: 100px;
+    border-radius: 30px;
+
+
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        justify-self: center;
+        
+        padding: 10px;
+
+        margin-top: 5px;
+        
+        
+        .logo {
+            display: flex;
+            justify-content: center;
+            justify-self: center;
+        }
+    }
+
+    .search-bar {
+
+        margin-top: 10px;
+
+        .search-input {
+
+            display: flex;
+            justify-content: space-between;
+            justify-self: center;
+            
+            padding: 10px;
+            
+            border-radius: 10px;
+            border-color: var(--secondary);
+            
+            height: 45px;
+            
+            border-radius: 20px;
+            border: solid;
+            border-color: var(--primary);
+            
+            outline: none;
+            
+            background-color: var(--secondary);
+            background-image: url('/assets/images/icons/search.png');
+            background-repeat:no-repeat;
+            background-position:right;
+            background-size: 50px;
+
+            text-align: center;
+            text-decoration: none;
+            font-family: sahelBold;
+            font-size: larger;
+            color: whitesmoke;
+
+            cursor: text;
+        }
+    }
+
+    .navigation-bar {
+
+        padding: 10px;
+
+        margin: 0px 20px 0px 0px;
+
+        ul.nav-links {
+            display: flex;
+            justify-content: space-between;
+            justify-self: center;
+            flex-direction: row;
+            
+            padding: 10px;
+            
+            height: 3rem;
+            width: 100%;
+            
+            position: relative;
+            top: -10px;
+
+            .nav-link {
+                display: flex;
+                justify-content: space-between;
+                justify-self: center;
+
+                background-color: var(--secondary);
+
+                border-radius: 10px;
+                border-color: var(--primary);
+                border-width: 4px;
+
+                padding: 10px;
+
+                a {
+                    display: flex;
+                    justify-content: space-between;
+                    justify-self: center;
+                    gap: 5px;
+
+                    padding: 0px;
+
+                    color: var(--title);
+                    text-decoration: none;
+                    font-family: sahelBold;
+                    font-size: large;
+
+                    img {
+                        width: 30px;
+                    }
+                }
+
+            }
+        }
+    }
+}
